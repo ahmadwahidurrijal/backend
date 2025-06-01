@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as Yup from 'yup';
 import UserModel from '../models/user.model';
 import { encrypt } from '../utils/encryption';
+import { generateToken } from '../utils/jwt';
 
 type Tregister ={
     fullName: string;
@@ -103,10 +104,15 @@ export default {
                     data: null
                 })
             }
+
+            const token = generateToken({
+                id: userByIdentifier._id,
+                role: userByIdentifier.role,
+            })
             //jika validasi password benar, maka user bisa login
             res.status(200).json({
                 message: 'Login Berhasil',
-                data: userByIdentifier,
+                data: token,
             })
         } catch (error) {
             const err = error as unknown as Error;

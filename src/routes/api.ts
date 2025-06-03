@@ -6,7 +6,7 @@ const router = express.Router();
 const asyncHandler = (fn: any) => (req: express.Request, res: express.Response, next: express.NextFunction) =>
   Promise.resolve(fn(req, res, next)).catch(next);
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({ 
     message : 'server is running',
     data: null});
